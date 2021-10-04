@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { Box, Center, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
@@ -6,11 +6,13 @@ import { Button } from '@chakra-ui/button';
 import { Spinner } from '@chakra-ui/spinner';
 import useFetch from '../customHooks/useFetch';
 import { Textarea } from '@chakra-ui/textarea';
-
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 function CreateBlog({ data, user }) {
   const [url, setUrl] = useState();
   const [postBody, setPostBody] = useState();
   const [uploadImg, setUploadImg] = useState();
+  const [spinner, setSpinner] = useState(true);
+
   function previewFile() {
     var preview = document.querySelector('#img');
     var file = document.querySelector('input[type=file]').files[0];
@@ -38,6 +40,7 @@ function CreateBlog({ data, user }) {
     };
     setUrl('/');
     setPostBody(blogData);
+    setSpinner(false);
     console.log(blogData);
   };
   const { fetchData, fetchIsPending, fetchError } = useFetch(
@@ -45,6 +48,12 @@ function CreateBlog({ data, user }) {
     'POST',
     postBody
   );
+  useEffect(() => {
+    if (fetchData) {
+      window.location.href = '/';
+    }
+    fetchData && setSpinner(true);
+  }, [fetchData]);
   return (
     <Box w='96'>
       <form onSubmit={handleSubmit}>
@@ -84,9 +93,20 @@ function CreateBlog({ data, user }) {
             bg='brand.main'
             borderColor='brand.subText'
             w='full'
+            isDisabled={!spinner}
             _hover='none'
             color='brand.bgText'>
-            Submit
+            {spinner ? (
+              'Submit'
+            ) : (
+              <CircularProgress
+                isIndeterminate
+                color='brand.main'
+                // bg='brand.main'
+                size='30px'
+                thickness='12'
+              />
+            )}
           </Button>
 
           {fetchData.success && <Text>{fetchData.success}</Text>}

@@ -56,7 +56,7 @@ function Dashboard() {
             <Link href='/login'>
               <Button
                 w='full'
-                mt='10'
+                mt='6'
                 _hover='none'
                 _active='none'
                 h='12'
