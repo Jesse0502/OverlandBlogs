@@ -12,6 +12,7 @@ import {
   Heading,
   Link,
   Text,
+  Wrap,
 } from '@chakra-ui/layout';
 import CreateBlog from './CreateBlog';
 import Blogs from './Blogs';
@@ -38,20 +39,30 @@ function Dashboard() {
     <Box bg='brand.bg' minH='94vh' color='brand.text'>
       <Heading
         textAlign='center'
-        pt='10'
+        pt='20'
         color='brand.main'
         textDecor='underline'>
         Overland Blogs
       </Heading>
-      <Flex justify='space-between' px='10' w='container.xl' m='auto' py='20'>
+      <Flex
+        flexDir={{ base: 'column-reverse', lg: 'row' }}
+        justify='space-between'
+        px={{ lg: '10', base: '1' }}
+        w={{ lg: 'container.xl', base: '' }}
+        m='auto'
+        py={{ lg: '16', base: '10' }}>
         <Blogs />
         {userData ? (
           <CreateBlog data={fetchData} user={userData} />
         ) : (
-          <Box textAlign='left' w='96'>
+          <Box
+            textAlign='left'
+            w={{ lg: '96', base: 'full' }}
+            px={{ base: '5', lg: '0' }}>
             <Heading color='brand.main'>Welcome to Overland Blogs</Heading>
             <Text color='brand.subText' py='2'>
-              Please Login To Create Post
+              Please Login To Create Blog! Also, see author names, write
+              comments & Dark mode :)
             </Text>
             <Link href='/login'>
               <Button

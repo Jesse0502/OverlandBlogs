@@ -35,6 +35,9 @@ function Nav() {
   const { fetchData, fetchIsPending, fetchError } = useFetch(url, 'GET');
   return (
     <Flex
+      pos='fixed'
+      w='100%'
+      zIndex='999'
       justify='space-between'
       h='7vh'
       alignItems='center'
@@ -42,31 +45,22 @@ function Nav() {
       bgColor='brand.main'>
       <Box>
         <Heading size='lg' color='brand.bgText'>
-          <Link href='/'>Blog App</Link>
+          <Link href='/' _hover='none'>
+            Overland Blogs
+          </Link>
         </Heading>
       </Box>
       {!userLoggedIn ? (
         <Center>
-          <Switch
-            value='dark'
-            id='email-alerts'
-            colorScheme='gray'
-            size='lg'
-            onChange={handleTheme}
-          />
           <NavNotLoggedIn />
         </Center>
       ) : (
         <Center>
-          <Switch
-            px='2'
-            value='dark'
-            id='email-alerts'
-            colorScheme='gray'
-            size='lg'
-            onChange={handleTheme}
+          <NavLoggedIn
+            fetchData={fetchData}
+            fetchIsPending={fetchIsPending}
+            handleTheme={handleTheme}
           />
-          <NavLoggedIn fetchData={fetchData} fetchIsPending={fetchIsPending} />
         </Center>
       )}
     </Flex>

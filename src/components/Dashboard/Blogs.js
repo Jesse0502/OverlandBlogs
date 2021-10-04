@@ -4,6 +4,7 @@ import { Box, Center, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
 import { Image } from '@chakra-ui/image';
 import Blog from './Blog';
 import jwt from 'jsonwebtoken';
+import { Progress } from '@chakra-ui/react';
 
 function Blogs() {
   const [url, setUrl] = useState();
@@ -35,11 +36,19 @@ function Blogs() {
       .catch((err) => {});
   }
   return (
-    <Box w='60%' minH='120vh'>
+    <Box w={{ lg: '65%', base: 'full' }} minH='120vh'>
       {fetchData ? (
         fetchData.blogs.map((blog) => <Blog blog={blog} user={user} />)
       ) : (
-        <Box>Loading...</Box>
+        <Box>
+          <Progress
+            isIndeterminate
+            size='xs'
+            colorScheme='green'
+            rounded='sm'
+          />
+          <Center fontSize='2xl'>Getting Blogs...</Center>
+        </Box>
       )}
     </Box>
   );

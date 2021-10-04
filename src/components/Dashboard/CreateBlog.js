@@ -6,13 +6,20 @@ import { Button } from '@chakra-ui/button';
 import { Spinner } from '@chakra-ui/spinner';
 import useFetch from '../customHooks/useFetch';
 import { Textarea } from '@chakra-ui/textarea';
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
+import {
+  CircularProgress,
+  CircularProgressLabel,
+  Image,
+} from '@chakra-ui/react';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 function CreateBlog({ data, user }) {
   const [url, setUrl] = useState();
   const [postBody, setPostBody] = useState();
   const [uploadImg, setUploadImg] = useState();
   const [spinner, setSpinner] = useState(true);
-
+  const [editor, setEditor] = useState();
   function previewFile() {
     var preview = document.querySelector('#img');
     var file = document.querySelector('input[type=file]').files[0];
@@ -37,6 +44,7 @@ function CreateBlog({ data, user }) {
       author: data.name,
       authorID: user.id,
       image: uploadImg ?? '',
+      authorImage: data.image,
     };
     setUrl('/');
     setPostBody(blogData);
@@ -55,11 +63,16 @@ function CreateBlog({ data, user }) {
     fetchData && setSpinner(true);
   }, [fetchData]);
   return (
-    <Box w='96'>
+    <Box w='96' px={{ lg: '0', base: '2' }} m={{ base: 'auto', lg: '0' }}>
+      {/* <Center>
+        <Button color='brand.main' bg='brand.bg'>
+          Create Blog
+        </Button>
+      </Center> */}
       <form onSubmit={handleSubmit}>
         <FormControl>
           <Heading color='brand.main'>Create Blog</Heading>
-          <Grid py='5' pb='2' w='full'>
+          <Grid py='5' pb='2' w={{ lg: 'full', base: '96' }}>
             <FormLabel>Title</FormLabel>
             <Textarea
               type='text'
@@ -86,7 +99,13 @@ function CreateBlog({ data, user }) {
               m='0px'
               onChange={previewFile}
             />
-            <img src='' alt='' id='img' />
+            <Image
+              w={{ lg: 'full', base: '96' }}
+              objectFit='cover'
+              src=''
+              alt=''
+              id='img'
+            />
           </Grid>
           <Button
             type='submit'
@@ -102,7 +121,6 @@ function CreateBlog({ data, user }) {
               <CircularProgress
                 isIndeterminate
                 color='brand.main'
-                // bg='brand.main'
                 size='30px'
                 thickness='12'
               />

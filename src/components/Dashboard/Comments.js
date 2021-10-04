@@ -36,12 +36,22 @@ function Comments({ user, blogID, comments }) {
       comment: document.querySelector('#form')[0].value,
       createdAt: Date.now(),
       user: user.id,
+      image: userDetail.image,
+      name: userDetail.name,
     });
     console.log(document.querySelector('#form')[0].value);
   };
   useEffect(() => {
-    setUserDetail();
-  });
+    fetch(`http://localhost:9000/user/${user.id}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        setUserDetail(result);
+        console.log(comments);
+      })
+      .catch((err) => {});
+  }, []);
   useEffect(() => {
     fetch(`http://localhost:9000/blog/comments/${blogID}`)
       .then((res) => {
@@ -80,11 +90,11 @@ function Comments({ user, blogID, comments }) {
           transitionDuration='0.3s'>
           {commentData ? (
             commentData.map((comment) => (
-              <Flex px='5' py='3'>
-                <Avatar src={user.image} mr='4' />
+              <Flex px='5' py='3' key={comment.createdAt}>
+                <Avatar src={comment.image} mr='4' />
                 <Flex flexDir='column'>
                   <Heading fontSize='md'>
-                    Name{' '}
+                    {comment.name}{' '}
                     <span>
                       &#8226;
                       <Text
@@ -117,7 +127,7 @@ function Comments({ user, blogID, comments }) {
         {open && (
           <form onSubmit={handleComment} id='form'>
             <Center px='3' py='3'>
-              <Avatar src={user.image} />
+              <Avatar src={userDetail.image} />
               <Input
                 mx='4'
                 borderColor='brand.subText'

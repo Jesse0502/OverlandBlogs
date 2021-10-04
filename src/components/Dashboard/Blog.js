@@ -24,36 +24,23 @@ function Blog({ blog, user }) {
       setUserExits(true);
     }
   });
-  // const [liked, setLiked] = useState(false);
   const [url, setUrl] = useState();
   const [postbody, setPostbody] = useState();
   const [deleted, setDeleted] = useState(false);
   const [fakeLike, setFakeLike] = useState(blog.likes);
-
+  const [readFullExpand, setReadFullExpand] = useState(3);
+  const handlefullBody = () => {
+    if (readFullExpand == 3) {
+      setReadFullExpand(null);
+    } else {
+      setReadFullExpand(3);
+    }
+  };
   const handleDelete = () => {
     setUrl('/blog/' + blog._id + '?_method=DELETE');
     setPostbody({ blogID: blog._id });
     setDeleted(true);
   };
-  // const handleLike = () => {
-  //   if (liked) {
-  //     setLiked(false);
-  //     setFakeLike(fakeLike - 1);
-  //     setPostbody({
-  //       likes: fakeLike - 1,
-  //       isLiked: { _id: user.id, type: false },
-  //     });
-  //     setUrl('/blog/' + blog._id + '?_method=PUT');
-  //   } else {
-  //     setLiked(true);
-  //     setFakeLike(fakeLike + 1);
-  //     setPostbody({
-  //       likes: blog.likes + 1,
-  //       isLiked: { _id: user.id, type: true },
-  //     });
-  //     setUrl('/blog/' + blog._id + '?_method=PUT');
-  //   }
-  // };
 
   const { fetchData, fetchIsPending, fetchError } = useFetch(
     url,
@@ -62,18 +49,21 @@ function Blog({ blog, user }) {
   );
   return (
     <Flex
+      overflowWrap='break-word'
       display={!deleted ? 'flex' : 'none'}
       key={blog._id}
-      w='100vh'
+      // overflowY='hidden'
+      w={{ base: '60%', lg: 'full' }}
       py='6'
       transition='ease'
       borderRadius='10'
       transitionDuration='0.3s'>
-      <Flex flexDir='column' px='5' pt='10'>
+      <Flex flexDir='column' px={{ lg: '5', base: '2' }} pt='10'>
         <Box
+          display={{ base: 'none', lg: 'contents' }}
           _hover={{ opacity: '0.8', cursor: 'pointer' }}
           onMouseOver={() => {}}>
-          <Avatar size='md' src={user.image} />
+          <Avatar size='md' src={blog.authorImage} />
         </Box>
       </Flex>
       <Box>
@@ -91,7 +81,7 @@ function Blog({ blog, user }) {
             addSuffix: true,
           })}
         </Text>
-        <Box boxShadow='lg' borderRadius='10'>
+        <Box boxShadow='lg' borderRadius='10' w={{ lg: 'full', base: '96' }}>
           <Box pos='relative'>
             <Image
               transition='ease'
@@ -176,7 +166,8 @@ function Blog({ blog, user }) {
           <Grid flexDir='column' gap='6' p='5'>
             <Heading
               color='brand.main'
-              w='max'
+              w='100%'
+              overflowWrap='break-word'
               transition='ease'
               transitionDuration='0.3s'
               _hover={{
@@ -192,9 +183,17 @@ function Blog({ blog, user }) {
               <Text fontWeight='bold'>Anonymous</Text>
             )}
 
-            <Text>{blog.body}</Text>
+            <Text
+              noOfLines={readFullExpand}
+              transitionDuration='0.3s'
+              transition='ease'
+              textOverflow='ellipsis'>
+              {blog.body}
+            </Text>
             <Flex justify='flex-start'>
-              <Button variant='link'>Read more</Button>
+              <Button variant='link' onClick={handlefullBody}>
+                {readFullExpand ? 'Read more' : 'Read Less'}
+              </Button>
             </Flex>
             {/* <Flex>
               <Flex>
@@ -210,7 +209,9 @@ function Blog({ blog, user }) {
               </Flex>
             </Flex> */}
           </Grid>
-          <Comments user={user} blogID={blog._id} comments={blog.comments} />
+          {user && (
+            <Comments user={user} blogID={blog._id} comments={blog.comments} />
+          )}
         </Box>
       </Box>
     </Flex>

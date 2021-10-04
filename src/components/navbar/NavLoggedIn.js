@@ -6,7 +6,8 @@ import { Avatar } from '@chakra-ui/avatar';
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/menu';
 import { Portal } from '@chakra-ui/portal';
 import { ChevronDownIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-function NavLoggedIn({ fetchData, fetchIsPending }) {
+import { Image } from '@chakra-ui/image';
+function NavLoggedIn({ fetchData, fetchIsPending, handleTheme }) {
   const handleLogout = () => {
     localStorage.removeItem('token');
     window.location.href = '/';
@@ -28,7 +29,12 @@ function NavLoggedIn({ fetchData, fetchIsPending }) {
         </MenuButton>
         <Portal>
           <MenuList>
-            {' '}
+            <Image
+              size='sm'
+              w='full'
+              h='24'
+              objectFit='cover'
+              src={!fetchIsPending && fetchData.image}></Image>{' '}
             <Text
               color='brand.bgText'
               fontWeight='bold'
@@ -41,6 +47,19 @@ function NavLoggedIn({ fetchData, fetchIsPending }) {
               <Center>
                 <ExternalLinkIcon mr='2' />
                 Logout
+              </Center>
+            </MenuItem>
+            <MenuItem>
+              <Center justifyContent='space-between'>
+                <Text>Dark Mode</Text>
+                <Switch
+                  ml='28'
+                  value='dark'
+                  id='email-alerts'
+                  colorScheme='gray'
+                  size='md'
+                  onChange={handleTheme}
+                />
               </Center>
             </MenuItem>
           </MenuList>
