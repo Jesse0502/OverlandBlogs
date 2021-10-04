@@ -8,7 +8,7 @@ function useFetch(url, type, postBody) {
     let done = false;
     function getData() {
       if (type === 'GET' && !done) {
-        fetch(`http://localhost:9000/${url}`)
+        fetch(`https://s5po6.sse.codesandbox.io/${url}`)
           .then((res) => {
             setFetchIsPending(false);
             return res.json();
@@ -23,7 +23,7 @@ function useFetch(url, type, postBody) {
           });
       }
       if (type === 'POST' && postBody && !done) {
-        fetch(`http://localhost:9000${url}`, {
+        fetch(`https://s5po6.sse.codesandbox.io${url}`, {
           method: 'POST',
           mode: 'cors',
           cache: 'no-cache',

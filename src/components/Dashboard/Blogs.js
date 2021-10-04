@@ -26,7 +26,7 @@ function Blogs() {
     }
   }, []);
   function getData() {
-    fetch(`http://localhost:9000/blogs`)
+    fetch(`https://s5po6.sse.codesandbox.io/blogs`)
       .then((res) => {
         return res.json();
       })

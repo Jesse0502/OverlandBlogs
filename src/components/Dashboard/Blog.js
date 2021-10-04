@@ -9,11 +9,7 @@ import {
   EditIcon,
   ViewIcon,
   DeleteIcon,
-} from '@chakra-ui/icons';
-import likeButton from '../assets/images/like.svg';
-import dislikeButton from '../assets/images/dislike.svg';
-import unlikeButton from '../assets/images/unlike.svg';
-import undislikeButton from '../assets/images/undislike.svg';
+} from '@chakra-ui/icons'; 
 import useFetch from '../customHooks/useFetch';
 import noImage from '../assets/images/question-mark-img.JPEG';
 import Comments from './Comments';

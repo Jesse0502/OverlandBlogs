@@ -42,7 +42,7 @@ function Comments({ user, blogID, comments }) {
     console.log(document.querySelector('#form')[0].value);
   };
   useEffect(() => {
-    fetch(`http://localhost:9000/user/${user.id}`)
+    fetch(`https://s5po6.sse.codesandbox.io/user/${user.id}`)
       .then((res) => {
         return res.json();
       })
@@ -53,7 +53,7 @@ function Comments({ user, blogID, comments }) {
       .catch((err) => {});
   }, []);
   useEffect(() => {
-    fetch(`http://localhost:9000/blog/comments/${blogID}`)
+    fetch(`https://s5po6.sse.codesandbox.io/blog/comments/${blogID}`)
       .then((res) => {
         return res.json();
       })
