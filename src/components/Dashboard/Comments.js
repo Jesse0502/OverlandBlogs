@@ -71,7 +71,7 @@ function Comments({ user, blogID, comments }) {
   );
   return (
     <Box transition='ease' transitionDuration='0.3s'>
-      <Center py='3'>
+      <Center py='3' boxShadow='lg' dropShadow='2xl'>
         <Button
           onClick={handleOpen}
           rounded='2xl'
@@ -82,11 +82,13 @@ function Comments({ user, blogID, comments }) {
           {!open ? <ChevronDownIcon mx='1' /> : <ChevronUpIcon mx='1' />}
         </Button>
       </Center>
-      <Box display={open ? 'block' : 'none'}>
+      <Box display={open ? 'content' : 'none'}>
         <Box
           overflowY='auto'
           maxH='500px'
+          // h={open ? 'full' : '20'}
           transition='ease'
+          opacity='0.9'
           transitionDuration='0.3s'>
           {commentData ? (
             commentData.map((comment) => (
@@ -110,7 +112,12 @@ function Comments({ user, blogID, comments }) {
                     </span>{' '}
                   </Heading>
 
-                  <Text mt='1' color='brand.text' opacity='0.7'>
+                  <Text
+                    mt='1'
+                    color='brand.text'
+                    opacity='0.7'
+                    w='full'
+                    overflowWrap='anywhere'>
                     {comment.comment}
                   </Text>
                 </Flex>
@@ -126,7 +133,12 @@ function Comments({ user, blogID, comments }) {
         </Box>
         {open && (
           <form onSubmit={handleComment} id='form'>
-            <Center px='3' py='3'>
+            <Center
+              px='3'
+              py='3'
+              borderTop='1px'
+              borderTopRadius='10'
+              borderColor='blackAlpha.200'>
               <Avatar src={userDetail.image} />
               <Input
                 mx='4'

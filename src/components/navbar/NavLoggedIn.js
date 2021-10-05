@@ -34,7 +34,7 @@ function NavLoggedIn({ fetchData, fetchIsPending, handleTheme }) {
           </Flex>
         </MenuButton>
         <Portal>
-          <MenuList>
+          <MenuList bg='brand.bg' color='brand.subText'>
             <Image
               size='sm'
               w='full'

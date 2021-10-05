@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import useFetch from './customHooks/useFetch';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
-import { Box, Center, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
+import {
+  Box,
+  Center,
+  Flex,
+  Grid,
+  Heading,
+  Link,
+  Text,
+} from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/button';
 
@@ -33,6 +41,7 @@ function Register() {
     };
     setFormData(regData);
   };
+  const handleTestUser = () => {};
   const { fetchData, fetchIsPending, fetchError } = useFetch(
     '/register',
     'POST',
@@ -63,7 +72,7 @@ function Register() {
           <FormControl id='email' isRequired>
             <FormLabel>Name</FormLabel>
             <Input
-              w={{ base: '38vh', lg: 'full' }}
+              w={{ base: '100%', lg: 'full' }}
               name='name'
               borderColor='brand.subText'
               type='text'
@@ -75,7 +84,7 @@ function Register() {
           <FormControl id='email' isRequired>
             <FormLabel>Email</FormLabel>
             <Input
-              w={{ base: '38vh', lg: 'full' }}
+              w={{ base: '100%', lg: 'full' }}
               name='email'
               borderColor='brand.subText'
               type='email'
@@ -88,7 +97,7 @@ function Register() {
             <FormLabel>Password</FormLabel>
             <InputGroup size='md'>
               <Input
-                w={{ base: '38vh', lg: 'full' }}
+                w={{ base: '100%', lg: 'full' }}
                 pr='4.5rem'
                 minLength={10}
                 type={show ? 'text' : 'password'}
@@ -98,7 +107,7 @@ function Register() {
               />
               <InputRightElement width='4.5rem'>
                 <Button
-                  w={{ base: '38vh', lg: 'full' }}
+                  w={{ base: '100%', lg: 'full' }}
                   h='1.75rem'
                   size='sm'
                   onClick={handleClick}
@@ -115,7 +124,7 @@ function Register() {
             <FormLabel>Confirm Password</FormLabel>
             <InputGroup size='md'>
               <Input
-                w={{ base: '38vh', lg: 'full' }}
+                w={{ base: '100%', lg: 'full' }}
                 pr='4.5rem'
                 type={show ? 'text' : 'password'}
                 placeholder='Enter password'
@@ -125,7 +134,7 @@ function Register() {
               <InputRightElement width='4.5rem'>
                 <Button
                   h='1.75rem'
-                  w={{ base: '38vh', lg: 'full' }}
+                  w={{ base: '100%', lg: 'full' }}
                   size='sm'
                   onClick={handleClick}
                   color='brand.text'
@@ -137,7 +146,7 @@ function Register() {
               </InputRightElement>
             </InputGroup>
           </FormControl>
-          <Box w={{ base: '38vh', lg: 'full' }}>
+          <Box w={{ base: '100%', lg: 'full' }}>
             <Button
               type='submit'
               bg='brand.main'
@@ -164,6 +173,7 @@ function Register() {
               transitionDuration='0.4s'>
               {fetchData.msg}
             </Text>
+            <Link onClick={handleTestUser}>Test User</Link>
             <Text color='green'>{fetchData.success}</Text>
             <Text color='crimson'>{fetchError.msg}</Text>
             <Text color='crimson'>{passwordErr}</Text>

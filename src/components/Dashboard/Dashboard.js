@@ -36,7 +36,7 @@ function Dashboard() {
   console.log(!fetchIsPending && fetchData);
 
   return (
-    <Box bg='brand.bg' minH='94vh' color='brand.text'>
+    <Box bg='brand.bg' minH='100vh' color='brand.text'>
       <Heading
         textAlign='center'
         pt='20'
@@ -61,8 +61,7 @@ function Dashboard() {
             px={{ base: '5', lg: '0' }}>
             <Heading color='brand.main'>Welcome to Overland Blogs</Heading>
             <Text color='brand.subText' py='2'>
-              Please Login To Create Blog! Also, see author names, write
-              comments & Dark mode :)
+              Please Login To Create Blog! Also, Enjoy dark mode :)
             </Text>
             <Link href='/login'>
               <Button

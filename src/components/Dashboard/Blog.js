@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from '@chakra-ui/image';
-import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
+import { Box, Center, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { Button } from '@chakra-ui/button';
 import { Menu, MenuButton, MenuList, MenuItem, Avatar } from '@chakra-ui/react';
@@ -14,6 +14,7 @@ import useFetch from '../customHooks/useFetch';
 import noImage from '../assets/images/question-mark-img.JPEG';
 import Comments from './Comments';
 function Blog({ blog, user, profile }) {
+  const [blogImageFit, setBlogImageFit] = useState(true);
   const [userExists, setUserExits] = useState(false);
   useEffect(() => {
     if (user) {
@@ -22,6 +23,13 @@ function Blog({ blog, user, profile }) {
       }
     }
   });
+  const handleblogImageFit = () => {
+    if (blogImageFit) {
+      setBlogImageFit(false);
+    } else {
+      setBlogImageFit(true);
+    }
+  };
   const [url, setUrl] = useState();
   const [postbody, setPostbody] = useState();
   const [deleted, setDeleted] = useState(false);
@@ -48,12 +56,10 @@ function Blog({ blog, user, profile }) {
   return (
     <Flex
       display={!deleted ? 'flex' : 'none'}
-      overflowWrap='break-word'
+      // overflowWrap='break-word'
       key={blog._id}
-      // overflowY='hidden'
       w={{ lg: '20', base: 'full' }}
       py='6'
-      // px='5'
       transition='ease'
       borderRadius='10'
       transitionDuration='0.3s'>
@@ -62,13 +68,22 @@ function Blog({ blog, user, profile }) {
           display={{ base: 'none', lg: 'contents' }}
           _hover={{ opacity: '0.8', cursor: 'pointer' }}
           onMouseOver={() => {}}>
-          {!profile && <Avatar size='md' src={blog.authorImage} />}
+          {!profile && (
+            <Avatar
+              size='md'
+              onClick={() =>
+                (window.location.href = '/profile/' + blog.authorID)
+              }
+              src={blog.authorImage}
+            />
+          )}
         </Box>
       </Flex>
       <Box>
         <Text
           color='brand.subText'
           py='2'
+          w='max'
           transition='ease'
           transitionDuration='0.3s'
           _hover={{
@@ -80,17 +95,23 @@ function Blog({ blog, user, profile }) {
             addSuffix: true,
           })}
         </Text>
-        <Box boxShadow='lg' borderRadius='10' w={{ lg: 'full', base: '96' }}>
+        <Flex
+          flexDir='column'
+          boxShadow='lg'
+          borderRadius='10'
+          m='auto'
+          w={{ lg: 'full', base: '370px' }}>
           <Box pos='relative'>
             <Image
               transition='ease'
               transitionDuration='0.3s'
-              _hover={{ opacity: '0.8' }}
+              _hover={{ opacity: '0.8', cursor: 'pointer' }}
               src={blog.image ? blog.image : noImage}
-              h='200px'
-              objectFit='cover'
+              h={blogImageFit ? '200px' : '500px'}
+              onClickCapture={handleblogImageFit}
+              objectFit={blogImageFit ? 'cover' : 'cover'}
               minW={{ lg: '90vh', base: 'full' }}
-              w='full'
+              // w={{ lg: '96', base: 'full' }}
               borderTopRadius='10'
             />
             <Menu autoSelect={false}>
@@ -181,9 +202,14 @@ function Blog({ blog, user, profile }) {
               {blog.title}
             </Heading>
             {user ? (
-              <Text fontWeight='bold'> {blog.author}</Text>
+              <Text fontWeight='bold' fontSize='lg' opacity='0.7'>
+                {' '}
+                {blog.author}
+              </Text>
             ) : (
-              <Text fontWeight='bold'>Anonymous</Text>
+              <Text fontWeight='bold' fontSize='lg' opacity='0.7'>
+                Anonymous
+              </Text>
             )}
 
             <Text
@@ -215,7 +241,7 @@ function Blog({ blog, user, profile }) {
           {user && (
             <Comments user={user} blogID={blog._id} comments={blog.comments} />
           )}
-        </Box>
+        </Flex>
       </Box>
     </Flex>
   );

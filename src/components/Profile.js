@@ -99,11 +99,11 @@ function Profile(props) {
       </Center>
       {userInfo ? (
         <Grid
-          pr='5'
+          // pr='5'
           bg='brand.bg'
           color='brand.text'
           templateColumns={{ lg: 'repeat(2, 1fr)', base: '1' }}
-          gap={{ lg: 3, base: 0 }}>
+          gap={{ lg: 2, base: 0 }}>
           {userInfo &&
             userInfo.blogs.map((blog) => (
               <Blog blog={blog} user={userLoggedIn} profile={true} />
