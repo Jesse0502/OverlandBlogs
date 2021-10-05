@@ -9,6 +9,7 @@ import { extendTheme } from '@chakra-ui/react';
 import { userLoginContext, themeContext } from './components/contexts/context';
 import { useEffect, useState } from 'react';
 import jwt from 'jsonwebtoken';
+import Profile from './components/Profile';
 function App() {
   const [currentTheme, setCurrentTheme] = useState(false);
 
@@ -23,6 +24,7 @@ function App() {
               text: 'black',
               subText: 'gray',
               bg: 'white',
+              gray: '#cccccc',
             },
           },
         }
@@ -35,6 +37,7 @@ function App() {
               bgText: 'white',
               text: 'white',
               subText: '#a3a3a3',
+              gray: '#4c5363',
             },
           },
         }
@@ -58,9 +61,10 @@ function App() {
             <userLoginContext.Provider value={{ userLogin, setUserLogin }}>
               <Nav />
               <Switch>
-                <Route path='/' exact component={Dashboard} />
+                <Route exact path='/' component={Dashboard} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/register' component={Register} />
+                <Route exact path='/profile/:id' component={Profile} />
               </Switch>
             </userLoginContext.Provider>
           </themeContext.Provider>

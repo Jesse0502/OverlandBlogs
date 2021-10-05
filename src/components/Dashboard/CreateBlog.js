@@ -63,7 +63,11 @@ function CreateBlog({ data, user }) {
     fetchData && setSpinner(true);
   }, [fetchData]);
   return (
-    <Box w='96' px={{ lg: '0', base: '2' }} m={{ base: 'auto', lg: '0' }}>
+    <Box
+      w='96'
+      px={{ lg: '0', base: '2' }}
+      m={{ base: 'auto', lg: '0' }}
+      py={{ lg: '0', base: '2' }}>
       {/* <Center>
         <Button color='brand.main' bg='brand.bg'>
           Create Blog
@@ -72,7 +76,7 @@ function CreateBlog({ data, user }) {
       <form onSubmit={handleSubmit}>
         <FormControl>
           <Heading color='brand.main'>Create Blog</Heading>
-          <Grid py='5' pb='2' w={{ lg: 'full', base: '96' }}>
+          <Grid py='5' pb='2' w='full'>
             <FormLabel>Title</FormLabel>
             <Textarea
               type='text'

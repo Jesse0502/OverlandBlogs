@@ -4,7 +4,7 @@ import { Box, Center, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
 import { Image } from '@chakra-ui/image';
 import Blog from './Blog';
 import jwt from 'jsonwebtoken';
-import { Progress } from '@chakra-ui/react';
+import { CircularProgress, Progress } from '@chakra-ui/react';
 
 function Blogs() {
   const [url, setUrl] = useState();
@@ -36,19 +36,23 @@ function Blogs() {
       .catch((err) => {});
   }
   return (
-    <Box w={{ lg: '65%', base: 'full' }} minH='120vh'>
+    <Box w={{ lg: '65%', base: '100%' }}>
       {fetchData ? (
         fetchData.blogs.map((blog) => <Blog blog={blog} user={user} />)
       ) : (
-        <Box>
-          <Progress
+        <Center pt={{ base: '32', lg: '44' }} w='90%' m='auto'>
+          <Heading
+            fontSize={{ base: '2xl', lg: '2.3em' }}
+            opacity='0.7'
+            pr={{ base: '3', lg: '7' }}>
+            Getting Blogs
+          </Heading>
+          <CircularProgress
             isIndeterminate
-            size='xs'
-            colorScheme='green'
-            rounded='sm'
+            size={{ base: '40px', lg: '60px' }}
+            color='brand.main'
           />
-          <Center fontSize='2xl'>Getting Blogs...</Center>
-        </Box>
+        </Center>
       )}
     </Box>
   );

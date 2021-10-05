@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { Link } from '@chakra-ui/react';
 import NavNotLoggedIn from './NavNotLoggedIn';
 import NavLoggedIn from './NavLoggedIn';
+
 function Nav() {
   const [url, setUrl] = useState(null);
   const { currentTheme, setCurrentTheme } = useContext(themeContext);

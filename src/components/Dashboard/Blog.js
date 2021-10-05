@@ -9,15 +9,17 @@ import {
   EditIcon,
   ViewIcon,
   DeleteIcon,
-} from '@chakra-ui/icons'; 
+} from '@chakra-ui/icons';
 import useFetch from '../customHooks/useFetch';
 import noImage from '../assets/images/question-mark-img.JPEG';
 import Comments from './Comments';
-function Blog({ blog, user }) {
+function Blog({ blog, user, profile }) {
   const [userExists, setUserExits] = useState(false);
   useEffect(() => {
-    if (blog.authorID === user.id) {
-      setUserExits(true);
+    if (user) {
+      if (blog.authorID === user.id) {
+        setUserExits(true);
+      }
     }
   });
   const [url, setUrl] = useState();
@@ -45,21 +47,22 @@ function Blog({ blog, user }) {
   );
   return (
     <Flex
-      overflowWrap='break-word'
       display={!deleted ? 'flex' : 'none'}
+      overflowWrap='break-word'
       key={blog._id}
       // overflowY='hidden'
-      w={{ base: '60%', lg: 'full' }}
+      w={{ lg: '20', base: 'full' }}
       py='6'
+      // px='5'
       transition='ease'
       borderRadius='10'
       transitionDuration='0.3s'>
-      <Flex flexDir='column' px={{ lg: '5', base: '2' }} pt='10'>
+      <Flex flexDir='column' px={{ lg: '5', base: '1' }} pt='10'>
         <Box
           display={{ base: 'none', lg: 'contents' }}
           _hover={{ opacity: '0.8', cursor: 'pointer' }}
           onMouseOver={() => {}}>
-          <Avatar size='md' src={blog.authorImage} />
+          {!profile && <Avatar size='md' src={blog.authorImage} />}
         </Box>
       </Flex>
       <Box>
@@ -86,7 +89,8 @@ function Blog({ blog, user }) {
               src={blog.image ? blog.image : noImage}
               h='200px'
               objectFit='cover'
-              w='100vh'
+              minW={{ lg: '90vh', base: 'full' }}
+              w='full'
               borderTopRadius='10'
             />
             <Menu autoSelect={false}>
@@ -106,7 +110,6 @@ function Blog({ blog, user }) {
                 borderRadius='10'
                 bg='whiteAlpha.500'
                 color='blackAlpha.800'>
-                {/* <TriangleDownIcon /> */}
                 &#8226;&#8226;&#8226;
               </MenuButton>
               <MenuList
@@ -114,14 +117,28 @@ function Blog({ blog, user }) {
                 color='brand.text'
                 border='2px solid black'
                 borderColor='#a3a3a3'>
+                {/* {userExists ? ( */}
                 <MenuItem
-                  onClick={() => alert('Read')}
+                  onClick={() =>
+                    (window.location.href = '/profile/' + blog.authorID)
+                  }
                   _hover={{ bgColor: 'brand.main', color: 'white' }}
                   _active='none'
                   bg='transparent'
                   color='brand.text'>
-                  <ExternalLinkIcon mr='2' /> Goto Profile
+                  <ExternalLinkIcon mr='2' /> Profile
                 </MenuItem>
+                {/* ) : ( */}
+                {/* <MenuItem
+                    onClick={() => alert('Please login to view profile')}
+                    _hover={{ bgColor: 'brand.main', color: 'white' }}
+                    _active='none'
+                    bg='transparent'
+                    color='brand.text'>
+                    <ExternalLinkIcon mr='2' /> Profile
+                  </MenuItem>
+                )} */}
+
                 {userExists ? (
                   <MenuItem
                     onClick={() => alert('edit')}
@@ -146,16 +163,6 @@ function Blog({ blog, user }) {
                 ) : (
                   ''
                 )}
-
-                <MenuItem
-                  onClick={() => alert('Read')}
-                  _hover={{ bgColor: 'brand.main', color: 'white' }}
-                  _active='none'
-                  bg='transparent'
-                  color='brand.text'>
-                  <ViewIcon mr='2' />
-                  Read full
-                </MenuItem>
               </MenuList>
             </Menu>
           </Box>
