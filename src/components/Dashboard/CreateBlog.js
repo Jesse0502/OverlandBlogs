@@ -12,7 +12,6 @@ function CreateBlog({ data, user }) {
   const [postBody, setPostBody] = useState();
   const [uploadImg, setUploadImg] = useState();
   const [spinner, setSpinner] = useState(true);
-  const [editor, setEditor] = useState();
   const history = useHistory();
   function previewFile() {
     var preview = document.querySelector('#img');
@@ -147,7 +146,7 @@ function CreateBlog({ data, user }) {
               borderColor='brand.subText'
               onClick={() => {
                 setPublish(false);
-                history.goBack();
+                history.push('/');
               }}
               w='30%'
               isDisabled={!spinner}

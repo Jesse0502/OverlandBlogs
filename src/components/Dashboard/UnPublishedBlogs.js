@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Center, Flex, Heading, Text } from '@chakra-ui/layout';
+import { Box, Flex, Heading, Text } from '@chakra-ui/layout';
 import { Image } from '@chakra-ui/image';
 import noImage from '../assets/images/question-mark-img.JPEG';
-import { Menu, MenuButton, MenuList, MenuItem, Avatar } from '@chakra-ui/react';
-import {
-  ExternalLinkIcon,
-  EditIcon,
-  ViewIcon,
-  DeleteIcon,
-} from '@chakra-ui/icons';
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { ExternalLinkIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
 import { Button } from '@chakra-ui/button';
 import { useHistory } from 'react-router';
@@ -21,7 +16,7 @@ function UnPublishedBlogs({ blogs }) {
   const handlePublished = (e) => {
     setPublished(true);
 
-    fetch(`https://s5po6.sse.codesandbox.io/blog/publish/${e}?_method=PUT`, {
+    fetch(`https://overland-api.herokuapp.com/blog/publish/${e}?_method=PUT`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -48,7 +43,7 @@ function UnPublishedBlogs({ blogs }) {
     window.location.href = `/edit/${e._id}`;
   };
   const handleDelete = (e) => {
-    fetch(`https://s5po6.sse.codesandbox.io/blog/${e}?_method=DELETE`, {
+    fetch(`https://overland-api.herokuapp.com/blog/${e}?_method=DELETE`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -72,7 +67,11 @@ function UnPublishedBlogs({ blogs }) {
   return (
     <Box>
       {blogs && blogs.length && (
-        <Box py='10' bg='brand.bg' color='brand.text' px='10'>
+        <Box
+          py='10'
+          bg='brand.bg'
+          color='brand.text'
+          px={{ lg: '10', base: '5' }}>
           <Heading
             py='5'
             textAlign='center'

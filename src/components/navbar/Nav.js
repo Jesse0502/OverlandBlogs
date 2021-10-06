@@ -1,7 +1,5 @@
 import React from 'react';
-import { Button } from '@chakra-ui/button';
-import { Box, Center, Flex, Heading, Text } from '@chakra-ui/layout';
-import { Switch } from '@chakra-ui/switch';
+import { Box, Center, Flex, Heading } from '@chakra-ui/layout';
 import { themeContext } from '../contexts/context';
 import { useContext } from 'react';
 import useAuth from '../customHooks/useAuth';

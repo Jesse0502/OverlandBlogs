@@ -1,15 +1,7 @@
 import { Button } from '@chakra-ui/button';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
-import {
-  Box,
-  Center,
-  Flex,
-  Grid,
-  Heading,
-  Link,
-  Text,
-} from '@chakra-ui/layout';
+import { Box, Center, Grid, Heading, Link, Text } from '@chakra-ui/layout';
 import React, { useEffect, useState } from 'react';
 import { Spinner } from '@chakra-ui/react';
 import useFetch from './customHooks/useFetch';
@@ -58,13 +50,13 @@ function Login() {
   }
 
   return (
-    <Center bg='brand.bg' h='94vh' color='brand.text'>
+    <Center bg='brand.bg' pt='10' h='100vh' color='brand.text'>
       <form onSubmit={handleSubmit}>
         <Grid
           // border=' 2px solid black'
           gap='10'
           px='10'
-          py='32'
+          py='24'
           boxShadow='2xl'
           w={{ md: '2xl', base: 'max' }}
           flexDir='column'>

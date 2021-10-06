@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from '@chakra-ui/image';
-import { Box, Center, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
+import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { Button } from '@chakra-ui/button';
 import { Menu, MenuButton, MenuList, MenuItem, Avatar } from '@chakra-ui/react';
-import {
-  ExternalLinkIcon,
-  EditIcon,
-  ViewIcon,
-  DeleteIcon,
-} from '@chakra-ui/icons';
+import { ExternalLinkIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import useFetch from '../customHooks/useFetch';
 import noImage from '../assets/images/question-mark-img.JPEG';
 import Comments from './Comments';
@@ -35,7 +30,7 @@ function Blog({ blog, user, profile }) {
     if (confirm) {
       setPublishBlog(false);
       fetch(
-        `https://s5po6.sse.codesandbox.io/blog/publish/${blog._id}?_method=PUT`,
+        `https://overland-api.herokuapp.com/blog/publish/${blog._id}?_method=PUT`,
         {
           method: 'POST',
           mode: 'cors',
@@ -179,16 +174,6 @@ function Blog({ blog, user, profile }) {
                     color='brand.text'>
                     <ExternalLinkIcon mr='2' /> Profile
                   </MenuItem>
-                  {/* ) : ( */}
-                  {/* <MenuItem
-                    onClick={() => alert('Please login to view profile')}
-                    _hover={{ bgColor: 'brand.main', color: 'white' }}
-                    _active='none'
-                    bg='transparent'
-                    color='brand.text'>
-                    <ExternalLinkIcon mr='2' /> Profile
-                  </MenuItem>
-                )} */}
 
                   {userExists ? (
                     <MenuItem
@@ -217,7 +202,7 @@ function Blog({ blog, user, profile }) {
                 </MenuList>
               </Menu>
             </Box>
-            <Grid flexDir='column' gap='6' p='5'>
+            <Grid flexDir='column' gap={{ lg: '6', base: '3' }} p='5'>
               <Heading
                 color='brand.main'
                 w='100%'
@@ -254,19 +239,6 @@ function Blog({ blog, user, profile }) {
                   {readFullExpand ? 'Read more' : 'Read Less'}
                 </Button>
               </Flex>
-              {/* <Flex>
-              <Flex>
-                <Image
-                  src={!liked ? unlikeButton : likeButton}
-                  color='brand.text'
-                  cursor='pointer'
-                  onClick={handleLike}
-                />
-                <Text px='1' fontWeight='bold'>
-                  {fakeLike}
-                </Text>
-              </Flex>
-            </Flex> */}
             </Grid>
             {user && (
               <Comments

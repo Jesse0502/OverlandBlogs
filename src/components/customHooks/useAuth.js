@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import jwt from 'jsonwebtoken';
 function useAuth() {
   const [userLoggedIn, setUserLoggedIn] = useState();

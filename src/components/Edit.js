@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Center, Heading, Text } from '@chakra-ui/layout';
-import useFetch from './customHooks/useFetch';
 import { Input } from '@chakra-ui/input';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Image } from '@chakra-ui/image';
-import noImage from './assets/images/question-mark-img.JPEG';
 import { Button } from '@chakra-ui/button';
 import { useHistory } from 'react-router';
 
@@ -12,14 +10,10 @@ function Edit(props) {
   let history = useHistory();
 
   const id = props.match.params.id;
-  //   const { fetchData, fetchError, fetchIsPending } = useFetch(
-  //     `/blog/edit/${id}`,
-  //     'GET'
-  //   );
   const [fetchData, setFetchData] = useState();
   const [updatePending, setUpdatePending] = useState(false);
   useEffect(() => {
-    fetch(`https://s5po6.sse.codesandbox.io/blog/edit/${id}`)
+    fetch(`https://overland-api.herokuapp.com/blog/edit/${id}`)
       .then((res) => {
         return res.json();
       })
@@ -27,7 +21,7 @@ function Edit(props) {
         console.log(result);
         setFetchData(result);
       })
-      .catch((err) => {});
+      .catch(() => {});
   }, [id]);
   const [uploadImg, setUploadImg] = useState();
   function handleSubmit(e) {
@@ -39,7 +33,7 @@ function Edit(props) {
     };
     setUpdatePending(true);
 
-    fetch(`https://s5po6.sse.codesandbox.io/blog/edit/${id}?_method=PUT`, {
+    fetch(`https://overland-api.herokuapp.com/blog/edit/${id}?_method=PUT`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -52,12 +46,12 @@ function Edit(props) {
       .then((res) => {
         return res.json();
       })
-      .then((result) => {
+      .then(() => {
         setUpdatePending(false);
         history.goBack();
         // window.location.href = '/';
       })
-      .catch((err) => {});
+      .catch(() => {});
   }
   const handleImageUpload = (e) => {
     e.preventDefault();

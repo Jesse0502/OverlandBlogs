@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useFetch from './customHooks/useFetch';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
-import {
-  Box,
-  Center,
-  Flex,
-  Grid,
-  Heading,
-  Link,
-  Text,
-} from '@chakra-ui/layout';
+import { Box, Center, Grid, Heading, Text } from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/button';
 
@@ -53,7 +45,7 @@ function Register() {
     window.location.href = '/login';
   }
   return (
-    <Center bg='brand.bg' color='brand.text' maxH='90vh'>
+    <Center bg='brand.bg' color='brand.text' maxH='100vh'>
       <form onSubmit={handleSubmit}>
         <Grid
           // border=' 2px solid black'

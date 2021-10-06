@@ -1,17 +1,6 @@
 import React from 'react';
-import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
-import {
-  Box,
-  Center,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Text,
-} from '@chakra-ui/layout';
+import { Box, Center, Grid, Heading, Text } from '@chakra-ui/layout';
 import { Avatar } from '@chakra-ui/avatar';
-import useFetch from './customHooks/useFetch';
-import useAuth from './customHooks/useAuth';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
@@ -19,7 +8,6 @@ import Blog from './Dashboard/Blog';
 import { Progress } from '@chakra-ui/progress';
 import jwt from 'jsonwebtoken';
 import UnPublishedBlogs from './Dashboard/UnPublishedBlogs';
-import { useHistory } from 'react-router';
 
 function Profile(props) {
   const [url, setUrl] = useState(null);
@@ -44,7 +32,7 @@ function Profile(props) {
   useEffect(() => {
     // if (userLoggedIn) {
     setNoBlogs(false);
-    fetch('https://s5po6.sse.codesandbox.io/profile/' + props.match.params.id)
+    fetch('https://overland-api.herokuapp.com/profile/' + props.match.params.id)
       .then((result) => {
         return result.json();
       })
@@ -90,7 +78,7 @@ function Profile(props) {
               w={{ base: '52', lg: '48' }}
               color='brand.text'
               opacity='0.5'>
-              Overlander for{' '}
+              Overlander since{' '}
               {userInfo.user.createdAt
                 ? formatDistanceToNow(new Date(userInfo.user.createdAt))
                 : 'No Info :('}

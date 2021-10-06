@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function useFetch(url, type, postBody) {
   const [fetchData, setFetchData] = useState('');
@@ -8,7 +8,7 @@ function useFetch(url, type, postBody) {
     let done = false;
     function getData() {
       if (type === 'GET' && !done) {
-        fetch(`https://s5po6.sse.codesandbox.io/${url}`)
+        fetch(`https://overland-api.herokuapp.com/${url}`)
           .then((res) => {
             setFetchIsPending(false);
             return res.json();
@@ -23,7 +23,7 @@ function useFetch(url, type, postBody) {
           });
       }
       if (type === 'POST' && postBody && !done) {
-        fetch(`https://s5po6.sse.codesandbox.io${url}`, {
+        fetch(`https://overland-api.herokuapp.com${url}`, {
           method: 'POST',
           mode: 'cors',
           cache: 'no-cache',

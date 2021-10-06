@@ -1,11 +1,9 @@
-import { Button } from '@chakra-ui/button';
-import { Box, Center, Flex, Grid, Text } from '@chakra-ui/layout';
+import { Center, Flex, Text } from '@chakra-ui/layout';
 import { Switch } from '@chakra-ui/switch';
-import React, { useState } from 'react';
+import React from 'react';
 import { Avatar } from '@chakra-ui/avatar';
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/menu';
 import { Portal } from '@chakra-ui/portal';
-import { ChevronDownIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { Image } from '@chakra-ui/image';
 import LogoutIcon from '../assets/images/logout.svg';
 import ProfileIcon from '../assets/images/profile.svg';
@@ -19,7 +17,6 @@ function NavLoggedIn({ fetchData, fetchIsPending, handleTheme }) {
   const { userLoggedIn } = useAuth();
 
   console.log(fetchData);
-  const [open, setOpen] = useState(false);
   return (
     <Center>
       <Menu>
@@ -30,7 +27,6 @@ function NavLoggedIn({ fetchData, fetchIsPending, handleTheme }) {
             alignItems='center'
             _hover={{ borderColor: 'red' }}>
             <Avatar size='sm' src={!fetchIsPending && fetchData.image}></Avatar>
-            {/* <ChevronDownIcon fontSize='xl' color='white' mx='1' /> */}
           </Flex>
         </MenuButton>
         <Portal>

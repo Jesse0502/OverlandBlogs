@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Image } from '@chakra-ui/image';
-import { Box, Flex, Grid, Heading, Text, Center } from '@chakra-ui/layout';
+import { Box, Flex, Heading, Text, Center } from '@chakra-ui/layout';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { Button } from '@chakra-ui/button';
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Avatar,
-  Input,
-} from '@chakra-ui/react';
+import { Avatar, Input } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import useFetch from '../customHooks/useFetch';
 import { CircularProgress } from '@chakra-ui/react';
@@ -44,7 +36,7 @@ function Comments({ user, blogID, comments }) {
     }
   };
   useEffect(() => {
-    fetch(`https://s5po6.sse.codesandbox.io/user/${user.id}`)
+    fetch(`https://overland-api.herokuapp.com/user/${user.id}`)
       .then((res) => {
         return res.json();
       })
@@ -55,7 +47,7 @@ function Comments({ user, blogID, comments }) {
       .catch((err) => {});
   }, []);
   useEffect(() => {
-    fetch(`https://s5po6.sse.codesandbox.io/blog/comments/${blogID}`)
+    fetch(`https://overland-api.herokuapp.com/blog/comments/${blogID}`)
       .then((res) => {
         return res.json();
       })

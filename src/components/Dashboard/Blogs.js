@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import useFetch from '../customHooks/useFetch';
 import { Box, Center, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
 import { Image } from '@chakra-ui/image';
 import Blog from './Blog';
 import jwt from 'jsonwebtoken';
-import { CircularProgress, Progress } from '@chakra-ui/react';
+import { CircularProgress } from '@chakra-ui/react';
 import TimelineIcon from '../assets/images/timeline.svg';
 function Blogs() {
-  const [url, setUrl] = useState();
   const [fetchData, setFetchData] = useState();
   const [user, setUser] = useState(false);
 
@@ -26,7 +24,7 @@ function Blogs() {
     }
   }, []);
   function getData() {
-    fetch(`https://s5po6.sse.codesandbox.io/blogs`)
+    fetch(`https://overland-api.herokuapp.com/blogs`)
       .then((res) => {
         return res.json();
       })
