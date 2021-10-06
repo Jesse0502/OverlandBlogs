@@ -41,7 +41,6 @@ function Register() {
     };
     setFormData(regData);
   };
-  const handleTestUser = () => {};
   const { fetchData, fetchIsPending, fetchError } = useFetch(
     '/register',
     'POST',
@@ -173,7 +172,6 @@ function Register() {
               transitionDuration='0.4s'>
               {fetchData.msg}
             </Text>
-            <Link onClick={handleTestUser}>Test User</Link>
             <Text color='green'>{fetchData.success}</Text>
             <Text color='crimson'>{fetchError.msg}</Text>
             <Text color='crimson'>{passwordErr}</Text>

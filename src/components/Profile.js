@@ -18,31 +18,31 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import Blog from './Dashboard/Blog';
 import { Progress } from '@chakra-ui/progress';
 import jwt from 'jsonwebtoken';
+import UnPublishedBlogs from './Dashboard/UnPublishedBlogs';
+import { useHistory } from 'react-router';
 
 function Profile(props) {
   const [url, setUrl] = useState(null);
-  // const { userLoggedIn } = useAuth();
   const [noBlogs, setNoBlogs] = useState();
   const [userInfo, setUserInfo] = useState();
-  // useEffect(() => {
-  //   if (userLoggedIn) {
-  //     setUrl('user/' + userLoggedIn.id);
-  //   }
-  // }, [userLoggedIn]);
-  // const { fetchData, fetchIsPending, fetchError } = useFetch(url, 'GET');
   const [userLoggedIn, setUserLoggedIn] = useState();
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const user = jwt.decode(token);
       if (user) {
-        setUserLoggedIn(user);
+        if (!user == undefined) {
+          setUserLoggedIn(user);
+        } else {
+          setUserLoggedIn({});
+        }
       } else {
-        setUserLoggedIn(null);
+        setUserLoggedIn({});
       }
     }
   }, []);
   useEffect(() => {
+    // if (userLoggedIn) {
     setNoBlogs(false);
     fetch('https://s5po6.sse.codesandbox.io/profile/' + props.match.params.id)
       .then((result) => {
@@ -50,14 +50,23 @@ function Profile(props) {
       })
       .then((user) => {
         console.log(user);
-        setUserInfo(user);
+        if (user !== null || undefined) {
+          setUserInfo(user);
+        } else {
+          setUserInfo(null);
+        }
+
         if (user.blogs.length) {
           setNoBlogs(false);
+          const ublog = user.blogs.filter((blog) => blog.isPublished === false);
+          setPublisher(ublog);
         } else {
           setNoBlogs(true);
         }
       });
-  }, [props.match.params.id]);
+    // }
+  }, []);
+  const [publisher, setPublisher] = useState();
   return (
     <Box minH='100vh'>
       <Center
@@ -81,15 +90,26 @@ function Profile(props) {
               w={{ base: '52', lg: '48' }}
               color='brand.text'
               opacity='0.5'>
-              Overlander since:{' '}
+              Overlander for{' '}
               {userInfo.user.createdAt
                 ? formatDistanceToNow(new Date(userInfo.user.createdAt))
                 : 'No Info :('}
             </Text>
           )}
           <Text pt='5' fontWeight='bold' color='brand.text' opacity='0.5'>
-            Blogs Published: {userInfo && userInfo.blogs.length}
+            Blogs Published:{' '}
+            {(publisher &&
+              userInfo &&
+              userInfo.blogs.length - publisher.length) ||
+              'None'}{' '}
           </Text>
+          {userLoggedIn !== undefined &&
+            publisher &&
+            userLoggedIn.id !== props.match.params.id && (
+              <Text fontWeight='bold' color='brand.text' opacity='0.5'>
+                Un-Published: {(publisher && publisher.length) || 'None'}
+              </Text>
+            )}
         </Box>
         <Avatar
           src={userInfo && userInfo.user.image}
@@ -97,18 +117,45 @@ function Profile(props) {
           size='2xl'
         />
       </Center>
+      {userLoggedIn !== undefined &&
+        publisher &&
+        userLoggedIn.id !== props.match.params.id && (
+          <Box>
+            <UnPublishedBlogs blogs={publisher} />
+          </Box>
+        )}
       {userInfo ? (
-        <Grid
-          // pr='5'
-          bg='brand.bg'
-          color='brand.text'
-          templateColumns={{ lg: 'repeat(2, 1fr)', base: '1' }}
-          gap={{ lg: 2, base: 0 }}>
-          {userInfo &&
-            userInfo.blogs.map((blog) => (
-              <Blog blog={blog} user={userLoggedIn} profile={true} />
-            ))}
-        </Grid>
+        <Box>
+          {userInfo.blogs.length && (
+            <Heading
+              textAlign='center'
+              py='10'
+              textDecor='underline'
+              bg='brand.bg'
+              color='brand.text'>
+              <Text opacity='0.7'>Published Blogs</Text>
+            </Heading>
+          )}
+
+          <Grid
+            // pr='5'
+            bg='brand.bg'
+            color='brand.text'
+            templateColumns={{ lg: 'repeat(2, 1fr)', base: '1' }}>
+            {userInfo &&
+              userInfo.blogs.map(
+                (blog) =>
+                  blog.isPublished && (
+                    <Blog
+                      blog={blog}
+                      user={userLoggedIn}
+                      profile={true}
+                      comments={blog.comments}
+                    />
+                  )
+              )}
+          </Grid>
+        </Box>
       ) : (
         <Box>
           <Progress
@@ -125,7 +172,7 @@ function Profile(props) {
 
       {noBlogs && (
         <Box>
-          <Heading textAlign='center' opacity='0.7' pt='48'>
+          <Heading textAlign='center' opacity='0.7' pt='10'>
             No Blogs to show
           </Heading>
         </Box>

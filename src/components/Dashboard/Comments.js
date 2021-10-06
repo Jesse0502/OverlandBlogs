@@ -19,7 +19,7 @@ function Comments({ user, blogID, comments }) {
   const [url, setUrl] = useState();
   const [postBody, setPostBody] = useState();
   const [comment, setComment] = useState(false);
-  const [commentData, setCommentData] = useState(null);
+  const [commentData, setCommentData] = useState([]);
   const [userDetail, setUserDetail] = useState();
   const handleOpen = () => {
     if (open) {
@@ -59,7 +59,9 @@ function Comments({ user, blogID, comments }) {
       })
       .then((result) => {
         setComment(false);
-        setCommentData(result.comments);
+        if (result.comments.length) {
+          setCommentData(result.comments);
+        }
         document.querySelector('#form')[0].value = null;
       })
       .catch((err) => {});
@@ -70,7 +72,10 @@ function Comments({ user, blogID, comments }) {
     postBody
   );
   return (
-    <Box transition='ease' transitionDuration='0.3s'>
+    <Box
+      transition='ease'
+      transitionDuration='0.3s'
+      display={userDetail ? 'block' : 'none'}>
       <Center py='3' boxShadow='lg' dropShadow='2xl'>
         <Button
           onClick={handleOpen}
@@ -85,15 +90,22 @@ function Comments({ user, blogID, comments }) {
       <Box display={open ? 'content' : 'none'}>
         <Box
           overflowY='auto'
-          maxH='500px'
+          maxH='250px'
           // h={open ? 'full' : '20'}
           transition='ease'
           opacity='0.9'
           transitionDuration='0.3s'>
-          {commentData ? (
+          {(commentData && comments) || comments.length ? (
             commentData.map((comment) => (
               <Flex px='5' py='3' key={comment.createdAt}>
-                <Avatar src={comment.image} mr='4' />
+                <Avatar
+                  src={comment.image}
+                  mr='4'
+                  _hover={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    window.location.href = `/profile/${comment.user}`;
+                  }}
+                />
                 <Flex flexDir='column'>
                   <Heading fontSize='md'>
                     {comment.name}{' '}

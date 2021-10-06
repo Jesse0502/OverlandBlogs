@@ -1,7 +1,15 @@
 import { Button } from '@chakra-ui/button';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
-import { Box, Center, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
+import {
+  Box,
+  Center,
+  Flex,
+  Grid,
+  Heading,
+  Link,
+  Text,
+} from '@chakra-ui/layout';
 import React, { useEffect, useState } from 'react';
 import { Spinner } from '@chakra-ui/react';
 import useFetch from './customHooks/useFetch';
@@ -26,6 +34,16 @@ function Login() {
     setLoginData(userData);
     setSpinner(false);
   };
+  const handleTestUser = (e) => {
+    e.preventDefault();
+    const userData = {
+      email: 'test@test.com',
+      password: 'test123456',
+    };
+    setLoginData(userData);
+    setSpinner(false);
+  };
+
   const { fetchData, fetchIsPending, fetchError } = useFetch(
     '/login',
     'POST',
@@ -95,6 +113,7 @@ function Login() {
               borderColor='brand.subText'
               w='full'
               _hover='none'
+              isDisabled={!spinner}
               color='brand.bgText'>
               {spinner ? (
                 'Submit'
@@ -108,6 +127,13 @@ function Login() {
                 />
               )}
             </Button>
+            <Link
+              color='brand.main'
+              onClick={handleTestUser}
+              textDecor='underline'>
+              Login as Test User
+            </Link>
+
             <Text color='red'>{fetchData.msg}</Text>
             <Text color='green'>{fetchData.success}</Text>
           </Box>

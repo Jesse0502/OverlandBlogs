@@ -38,7 +38,9 @@ function Blogs() {
   return (
     <Box w={{ lg: '65%', base: '100%' }}>
       {fetchData ? (
-        fetchData.blogs.map((blog) => <Blog blog={blog} user={user} />)
+        fetchData.blogs.map(
+          (blog) => blog.isPublished && <Blog blog={blog} user={user} />
+        )
       ) : (
         <Center pt={{ base: '32', lg: '44' }} w='90%' m='auto'>
           <Heading

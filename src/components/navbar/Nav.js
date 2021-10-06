@@ -11,8 +11,10 @@ import { useEffect } from 'react';
 import { Link } from '@chakra-ui/react';
 import NavNotLoggedIn from './NavNotLoggedIn';
 import NavLoggedIn from './NavLoggedIn';
+import { useHistory } from 'react-router';
 
 function Nav() {
+  const history = useHistory();
   const [url, setUrl] = useState(null);
   const { currentTheme, setCurrentTheme } = useContext(themeContext);
   const { userLoggedIn } = useAuth();
@@ -46,7 +48,11 @@ function Nav() {
       bgColor='brand.main'>
       <Box>
         <Heading size='lg' color='brand.bgText'>
-          <Link href='/' _hover='none'>
+          <Link
+            onClick={() => {
+              history.push('/');
+            }}
+            _hover='none'>
             Overland Blogs
           </Link>
         </Heading>

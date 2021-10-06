@@ -55,6 +55,7 @@ function NavLoggedIn({ fetchData, fetchIsPending, handleTheme }) {
               }
               _hover={{ bgColor: 'brand.main', color: 'white' }}
               _active='none'
+              py='2'
               bg='transparent'
               color='brand.text'>
               <Image src={ProfileIcon} mr='2'></Image>
@@ -64,6 +65,7 @@ function NavLoggedIn({ fetchData, fetchIsPending, handleTheme }) {
               onClick={handleLogout}
               _hover={{ bgColor: 'brand.main', color: 'white' }}
               _active='none'
+              py='2'
               bg='transparent'
               color='brand.text'>
               <Center>
@@ -74,6 +76,7 @@ function NavLoggedIn({ fetchData, fetchIsPending, handleTheme }) {
             <MenuItem
               _hover={{ bgColor: 'brand.main', color: 'white' }}
               _active='none'
+              py='2'
               bg='transparent'
               color='brand.text'>
               <Center justifyContent='space-between'>

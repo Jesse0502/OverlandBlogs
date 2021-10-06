@@ -1,15 +1,17 @@
 import { Button } from '@chakra-ui/button';
 import { Box } from '@chakra-ui/layout';
 import React from 'react';
+import { useHistory } from 'react-router';
 
 function NavNotLoggedIn() {
+  const history = useHistory();
   return (
     <div>
       {' '}
       <Box>
         <Button
           onClick={() => {
-            window.location.href = '/login';
+            history.push('/login');
           }}
           variant='ghost'
           color='brand.bgText'
@@ -19,7 +21,7 @@ function NavNotLoggedIn() {
         </Button>
         <Button
           onClick={() => {
-            window.location.href = '/register';
+            history.push('/register');
           }}
           variant='ghost'
           color='brand.bgText'

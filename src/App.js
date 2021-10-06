@@ -10,6 +10,7 @@ import { userLoginContext, themeContext } from './components/contexts/context';
 import { useEffect, useState } from 'react';
 import jwt from 'jsonwebtoken';
 import Profile from './components/Profile';
+import Edit from './components/Edit';
 function App() {
   const [currentTheme, setCurrentTheme] = useState(false);
 
@@ -65,6 +66,7 @@ function App() {
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/profile/:id' component={Profile} />
+                <Route exact path='/edit/:id' component={Edit} />
               </Switch>
             </userLoginContext.Provider>
           </themeContext.Provider>
