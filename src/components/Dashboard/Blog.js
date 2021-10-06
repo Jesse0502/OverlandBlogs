@@ -121,7 +121,7 @@ function Blog({ blog, user, profile }) {
               cursor: 'pointer',
             }}>
             Published{' '}
-            {formatDistanceToNow(new Date(blog.updatedAt), {
+            {formatDistanceToNow(new Date(blog.blogUpdate ?? blog.updatedAt), {
               addSuffix: true,
             })}
           </Text>

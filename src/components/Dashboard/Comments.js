@@ -30,16 +30,18 @@ function Comments({ user, blogID, comments }) {
   };
   const handleComment = (e) => {
     e.preventDefault();
-    setComment(true);
-    setUrl('/blog/comment/' + blogID + '?_method=PUT');
-    setPostBody({
-      comment: document.querySelector('#form')[0].value,
-      createdAt: Date.now(),
-      user: user.id,
-      image: userDetail.image,
-      name: userDetail.name,
-    });
-    console.log(document.querySelector('#form')[0].value);
+    if (document.querySelector('#form')[0].value) {
+      setComment(true);
+      setUrl('/blog/comment/' + blogID + '?_method=PUT');
+      setPostBody({
+        comment: document.querySelector('#form')[0].value,
+        createdAt: Date.now(),
+        user: user.id,
+        image: userDetail.image,
+        name: userDetail.name,
+      });
+      console.log(document.querySelector('#form')[0].value);
+    }
   };
   useEffect(() => {
     fetch(`https://s5po6.sse.codesandbox.io/user/${user.id}`)

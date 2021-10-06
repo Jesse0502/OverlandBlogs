@@ -5,7 +5,7 @@ import { Image } from '@chakra-ui/image';
 import Blog from './Blog';
 import jwt from 'jsonwebtoken';
 import { CircularProgress, Progress } from '@chakra-ui/react';
-
+import TimelineIcon from '../assets/images/timeline.svg';
 function Blogs() {
   const [url, setUrl] = useState();
   const [fetchData, setFetchData] = useState();
@@ -37,6 +37,18 @@ function Blogs() {
   }
   return (
     <Box w={{ lg: '65%', base: '100%' }}>
+      <Flex
+        alignItems='center'
+        w='90%'
+        m='auto'
+        pl={{ lg: '12' }}
+        pt={{ base: '20', lg: 0 }}>
+        <Heading opacity='0.7' fontSize={{ base: '3em' }} textDecor='underline'>
+          Timeline
+        </Heading>
+
+        <Image pl='2' src={TimelineIcon} w='50px' />
+      </Flex>
       {fetchData ? (
         fetchData.blogs.map(
           (blog) => blog.isPublished && <Blog blog={blog} user={user} />

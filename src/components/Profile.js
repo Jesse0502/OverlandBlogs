@@ -31,7 +31,7 @@ function Profile(props) {
     if (token) {
       const user = jwt.decode(token);
       if (user) {
-        if (!user == undefined) {
+        if (user) {
           setUserLoggedIn(user);
         } else {
           setUserLoggedIn({});
@@ -104,8 +104,7 @@ function Profile(props) {
               'None'}{' '}
           </Text>
           {userLoggedIn !== undefined &&
-            publisher &&
-            userLoggedIn.id !== props.match.params.id && (
+            props.match.params.id === userLoggedIn.id && (
               <Text fontWeight='bold' color='brand.text' opacity='0.5'>
                 Un-Published: {(publisher && publisher.length) || 'None'}
               </Text>
@@ -117,13 +116,11 @@ function Profile(props) {
           size='2xl'
         />
       </Center>
-      {userLoggedIn !== undefined &&
-        publisher &&
-        userLoggedIn.id !== props.match.params.id && (
-          <Box>
-            <UnPublishedBlogs blogs={publisher} />
-          </Box>
-        )}
+      {userLoggedIn !== undefined && props.match.params.id === userLoggedIn.id && (
+        <Box>
+          <UnPublishedBlogs blogs={publisher} />
+        </Box>
+      )}
       {userInfo ? (
         <Box>
           {userInfo.blogs.length && (
